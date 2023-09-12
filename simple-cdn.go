@@ -16,7 +16,7 @@ func main() {
 	// Get port from env
 	port := os.Getenv("REST_PORT")
 	if port == "" {
-		port = "3003"
+		port = "3004"
 	}
 
 	var router *gin.Engine = gin.Default()
