@@ -1,0 +1,14 @@
+---
+version: "3.8"
+services:
+  simple-cdn:
+    image: p0t4t0sandwich/simple-cdn:latest
+    container_name: simple-cdn
+    environment:
+      - TZ=UTC
+      - GIN_MODE=release
+    ports:
+      - "0.0.0.0:3003:3003"
+    volumes:
+      - /path/to/folder:/app/cdn
+    restart: unless-stopped
