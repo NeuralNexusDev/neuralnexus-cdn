@@ -80,6 +80,9 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	for len(path) > 0 && path[0] == '/' {
 		path = path[1:]
 	}
+	if _, err := os.Stat("/cdn/" + path); os.IsNotExist(err) {
+		os.MkdirAll("/cdn/"+path, os.ModePerm)
+	}
 
 	dst, err := os.Create("/cdn/" + path + "/" + handler.Filename)
 	if err != nil {
