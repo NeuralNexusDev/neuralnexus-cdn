@@ -46,9 +46,14 @@ func uploadPageHandler(w http.ResponseWriter, r *http.Request) {
 		</head>
 		<body>
 			<form action="/upload" method="post" enctype="multipart/form-data">
+				<label for="upload_key">Upload Key:</label>
 				<input type="text" name="upload_key" required/>
+				<br>
+				<label for="upload_path">Upload Path:</label>
 				<input type="text" name="upload_path" />
+				<br>
 				<input type="file" name="file" required/>
+				<br>
 				<input type="submit" value="Upload" />
 			</form>
 		</body>
