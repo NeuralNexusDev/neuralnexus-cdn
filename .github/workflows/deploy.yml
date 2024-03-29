@@ -5,18 +5,22 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
   build:
     name: Build
-    needs: test
     runs-on: ubuntu-latest
     environment: simple-cdn
     steps:
+      -
+        name: Setup Go 1.22.x
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.22.x
+      # -
+      #   name: Install dependencies
+      #   run: |
+      #     go get .
+      - name: Build Go binary
+        run: CGO_ENABLED=0 GOOS=linux go build -o ./simple-cdn
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2

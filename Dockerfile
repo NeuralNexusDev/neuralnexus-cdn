@@ -1,14 +1,5 @@
-FROM golang:1.21
+FROM alpine:3.14
 
-WORKDIR /app
+COPY ./simple-cdn .
 
-
-COPY go.mod go.sum ./
-
-RUN go mod download
-
-COPY *.go ./
-
-RUN CGO_ENABLED=0 GOOS=linux go build -o /simple-cdn
-
-CMD ["/simple-cdn"]
+CMD ["./simple-cdn"]
