@@ -26,9 +26,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build Go binary
+        id: build_go
         run: CGO_ENABLED=0 GOOS=linux go build -o ./simple-cdn
       - name: Build and push
         uses: docker/build-push-action@v3
+        if: steps.build_go.outcome == 'success'
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/simple-cdn:latest
