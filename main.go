@@ -76,7 +76,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		path = path[1:]
 	}
 
-	dst, err := os.Create("/" + path + "/" + handler.Filename)
+	dst, err := os.Create("/cdn/" + path + "/" + handler.Filename)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
