@@ -1,5 +1,20 @@
-FROM alpine:3.14
+FROM golang:1.22.1-alpine AS build
 
-COPY ./simple-cdn .
+WORKDIR /app
 
-CMD ["./simple-cdn"]
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN go generate
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o cdn .
+
+FROM alpine:edge AS release-stage
+
+WORKDIR /app
+
+COPY --from=build /app/cdn .
+
+CMD ["/app/cdn"]
