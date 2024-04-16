@@ -9,6 +9,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/rs/cors"
 )
 
 // WrappedWriter - Wrapper for http.ResponseWriter
@@ -79,7 +81,10 @@ func (s *CDNServer) Setup() http.Handler {
 	router.HandleFunc("GET /upload", UploadPageHandler)
 	router.HandleFunc("POST /upload", UploadHandler)
 
-	return RequestLoggerMiddleware(router)
+	return CreateStack(
+		RequestLoggerMiddleware,
+		cors.AllowAll().Handler,
+	)(router)
 }
 
 // Run - Start the web server
